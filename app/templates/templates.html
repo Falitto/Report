@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{{ url_for('index') }}">
+    <img src="{{ url_for('static', filename='images/back.svg') }}" width="16" height="16">
+Назад
+</a>
+<table>
+    <caption>Таблица шаблонов</caption>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Статус</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for template in templates %}
+        <tr>
+            <td>{{ template.id }}</td>
+            <td>{{ template.name }}</td>
+            {% for status in statuses %}
+                {% if status.id == template.status %}
+                    <td>{{ status.name }}</td> 
+                {% endif %}
+            {% endfor %}
+            <td><a href="{{ url_for('template', template_id = template.id) }}">
+                    <img src="{{ url_for('static', filename='images/edit.svg') }}" width="16" height="16">
+                    Открыть
+                </a>
+            </td>
+        </tr>   
+    {% endfor %}
+    </tbody>
+</table>
+<div><a href="{{ url_for('new_template') }}">
+        <img src="{{ url_for('static', filename='images/add.svg') }}" width="16" height="16">
+        Добавить шаблон
+    </a></div>
+    <div>
+{% endblock %}

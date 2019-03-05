@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+<a href="{{ url_for('index') }}">
+        <img src="{{ url_for('static', filename='images/back.svg') }}" width="16" height="16">
+    Назад
+</a>
+</div>
+<div><a href="{{ url_for('generate_doc', document_id = document.id) }}">
+        <img src="{{ url_for('static', filename='images/doc.svg') }}" width="16" height="16">
+    Сформировать отчет
+</a></div>
+<form action="" method="post">
+<div>
+<table class="no-border">
+    <caption>Поля документа</caption>
+    <thead>
+        <tr>
+            <th> </th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ document_form.number.label }}</td>
+            <td>{{ document_form.number}}
+                {% for error in document_form.number.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>{{ document_form.customer.label }}</td>
+            <td>{{ document_form.customer}}
+                {% for error in document_form.customer.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </td>
+        </tr>
+            
+            {% for field in fields %}
+                <tr>
+                    <td>{{ field.name }}</td>
+                    <td><input type="text" name="{{ field.alias }}" value="{{ field.value }}"></td>  
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    {{ document_form.submit()}}
+</form>
+{% endblock %}

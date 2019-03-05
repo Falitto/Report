@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{{ url_for('templates') }}">
+        <img src="{{ url_for('static', filename='images/back.svg') }}" width="16" height="16">
+    Назад
+</a>
+<br>
+<form action="" method="post" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.name.label }}
+        {{ form.name(size=50)}}
+        {% for error in form.name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.status.label }}
+        {{ form.status}}
+        {% for error in form.status.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.template_file.label }}
+        {{ form.template_file}}
+        {% for error in form.template_file.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.submit()}}
+    </div>
+{% endblock %}

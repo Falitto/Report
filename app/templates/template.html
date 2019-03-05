@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{{ url_for('templates') }}">
+        <img src="{{ url_for('static', filename='images/back.svg') }}" width="16" height="16">
+    Назад
+</a>
+<br>
+<h3>{{ template.id }} {{ template.name }}</h3>
+<form action="" method="post" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.name.label }}
+        {{ form.name(size=50)}}
+        {% for error in form.name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.status.label }}
+        {{ form.status}}
+        {% for error in form.status.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div>
+        {% if template.file_name == '' %}
+        {{ form.template_file.label }}
+        {{ form.template_file}}
+        {% for error in form.template_file.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        {% endif %}
+        {% if template.file_name != '' %}
+        <a href="{{ url_for('download_template', filename = template.file_name) }}">
+            <img src="{{ url_for('static', filename='images/edit.svg') }}" width="16" height="16">
+            Открыть
+        </a>
+        <a href="{{ url_for('delete_template_file', template_id = template.id, filename = template.file_name) }}">
+            <img src="{{ url_for('static', filename='images/edit.svg') }}" width="16" height="16">
+            Удалить файл
+        </a>
+        {% endif %}
+    </div>
+
+    <table>
+        <caption>Поля шаблона</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Поле</th>
+                <th>Алиас</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for field in fields %}
+            <tr>
+                <td>{{ field.id }}</td>
+                <td>{{ field.name }}</td> 
+                <td>{{ field.alias }}</td> 
+                <td><a href="{{ url_for('field', template_id = template.id, field_id = field.id) }}">
+                        <img src="{{ url_for('static', filename='images/edit.svg') }}" width="16" height="16">
+                        Открыть
+                    </a>
+                </td>
+                <td><a href="{{ url_for('delete_field', template_id = template.id, field_id = field.id) }}">
+                        <img src="{{ url_for('static', filename='images/delete.svg') }}" width="16" height="16">
+                        Удалить
+                    </a>
+                </td>
+            </tr>   
+        {% endfor %}
+        </tbody>
+    </table>
+    <div><a href="{{ url_for('new_field', template_id=template.id) }}">
+        <img src="{{ url_for('static', filename='images/add.svg') }}" width="16" height="16">
+        Добавить поле
+    </a></div>
+    <div>
+        {{ form.submit()}}
+    </div>
+{% endblock %}

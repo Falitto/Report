@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Edit Profile</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.last_name.label }}
+            {{ form.last_name(size=50)}}
+            {% for error in form.last_name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.first_name.label }}
+            {{ form.first_name(size=50)}}
+            {% for error in form.first_name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.patronymic.label }}
+            {{ form.patronymic(size=50)}}
+            {% for error in form.patronymic.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+
+<table class="no-border">
+    <tr>
+        <td>
+            <b>
+                Исполнитель 
+            </b>
+        </td>
+        <td>
+            {{ form.performer}} 
+        </td>
+        
+    </tr>
+    <tr>
+        <td>
+            <b>
+                Оценщик 
+            </b>
+        </td>
+        <td>
+            {{ form.appraiser}}  
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>
+                Подписант 
+            </b>
+        </td>
+        <td>
+            {{ form.signer}}  
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>
+                Контролер качества 
+            </b>
+        </td>
+        <td>
+            {{ form.controler}}    
+        </td>
+    </tr>    
+</table>
+
+
+
+        {% for error in form.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        <div>{{ form.submit() }}</div>
+    </form>
+{% endblock %}
