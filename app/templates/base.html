@@ -16,19 +16,23 @@
             <a href="{{ url_for('login') }}"><img src="{{ url_for('static', filename='images/authorization.svg') }}" width="20" height="20">Авторизоваться</a>
             {% else %}
             <a href="{{ url_for('user', username=current_user.username) }}"><img src="{{ url_for('static', filename='images/settings.svg') }}" width="20" height="20">Профиль</a>
+            <a href="{{ url_for('organizations') }}">Организации</a>
             <a href="{{ url_for('logout') }}"><img src="{{ url_for('static', filename='images/exit.svg') }}" width="20" height="20">Выйти</a>
             {% endif %}
         </div>
         <hr>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-        <ul>
+        <div class="is-col is-30">
             {% for message in messages %}
-            <li>{{ message }}</li>
+            <div class="alert is-focus">{{ message }}<span class="close is-small"></span>
+            </div>
             {% endfor %}
-        </ul>
+        </div>
         {% endif %}
         {% endwith %}
+        <div class="container">
         {% block content %}{% endblock %}
+        </div>
     </body>
 </html>

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, FileField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, FileField, IntegerField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from app.models import User
 
@@ -55,6 +55,10 @@ class Template_view(FlaskForm):
 class Field_template(FlaskForm):
     name = StringField('Имя поля')
     alias = StringField('Алиас в документе')
+    group_id = SelectField('Раздел', choices=[])
+    value = TextAreaField('Значение по умолчанию')
+    index = IntegerField('Номер в группе')
+    comment = TextAreaField('Комментарий(будет выводится вместе с полем)')
     submit = SubmitField('Сохранить')
 
 class DocumentsForm(FlaskForm):
@@ -65,3 +69,20 @@ class DocumentForm(FlaskForm):
     number = StringField('Номер документа')
     customer = StringField('Заказчик')
     submit = SubmitField('Сохранить документ')
+    
+class GroupForm(FlaskForm):
+    name = StringField('Название раздела')
+    comment = TextAreaField('Комментарий(будет выводится вместе с разделом)')
+    index = IntegerField('Номер раздела в шаблоне(порядковый номер)')
+    submit = SubmitField('Сохранить раздел')
+
+class PerformersForm(FlaskForm):
+    performers = SelectField('Исполнители', choices=[])
+    submit = SubmitField('Добавить исполнителя')
+
+class OrganizationForm(FlaskForm):
+    name = StringField('Организация')
+    inn = StringField('ИНН')
+    ogrn = StringField('ОГРН')
+    kpp = StringField('КПП')
+    submit = SubmitField('Сохранить')

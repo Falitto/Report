@@ -1,36 +1,60 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p><a href="{{ url_for('templates') }}">Шаблоны</a></p>
+<div class="row">
+    <div class="nine columns">
+        <p>
+            <a href="{{ url_for('templates') }}">
+                Шаблоны
+            </a>
+        </p>
+    </div>
+</div>
 <form action="" method="POST">
-    <div>
-        {{ form.templates.label }}
-        {{ form.templates}}
-        {% for error in form.templates.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-        {{ form.submit()}}
+    <div class="row">
+        <div class="four columns">
+            {{ form.templates.label }}
+        </div>
+    </div>
+    <div class="row">
+            <div class="four columns">
+            {{ form.templates(class="u-full-width")}}
+            {% for error in form.templates.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div class="four columns">
+            {{ form.submit(class="u-full-width")}}
+        </div>
     </div>
 </form>
-<div>
-<table class="no-border">
-    <caption>Таблица документов</caption>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Номер документа</th>
-            <th>Организация</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for document in documents %}
-        <tr>
-            <td>{{ document.id }}</td>
-            <td>{{ document.number }}</td> 
-            <td>{{ document.organization }}</td> 
-            <td><a href="{{ url_for('document', document_id=document.id) }}"><img src="{{ url_for('static', filename='images/edit.svg') }}" width="16" height="16">Открыть</a></td>
-        </tr>   
-    {% endfor %}
-    </tbody>
-</table>
+<div class="row">
+    <div class="nine columns">
+        <table class="no-border u-full-width">
+            <caption>Таблица документов</caption>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Номер документа</th>
+                    <th>Организация</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for document in documents %}
+                    <tr>
+                        <td>{{ document.id }}</td>
+                        <td>{{ document.number }}</td> 
+                        <td>{{ document.organization }}</td> 
+                        <td>
+                            <a href="{{ url_for('document', document_id=document.id) }}">
+                                <img src="{{ url_for('static', filename='images/edit.svg') }}" width="16" height="16">
+                                Открыть
+                            </a>
+                        </td>
+                    </tr>   
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

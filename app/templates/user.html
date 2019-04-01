@@ -67,6 +67,15 @@
     Контролер качества
 </div>
 {% endif %}
+<div class="row">
+    <div class="nine columns">
+        <p>
+            <a href="{{ url_for('organization', organization_id = user.organization) }}">
+                Организация
+            </a>
+        </p>
+    </div>
+</div>
 <hr>
 <div>
     <a href="{{ url_for('edit_profile') }}">

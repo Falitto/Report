@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
-<!-- Active URL: http://ondras.zarovi.cz/sql/demo/ -->
+<!-- Active URL: https://ondras.zarovi.cz/sql/demo/ -->
 <sql>
 <datatypes db="mysql">
 	<group label="Numeric" color="rgb(238,238,170)">
@@ -50,6 +50,12 @@
 <default>1</default><relation table="Statuses" row="id" />
 <comment>Поле статуса документа, по умолчанию 1(Черновик)</comment>
 </row>
+<row name="file_path" null="1" autoincrement="0">
+<datatype>VARCHAR(255)</datatype>
+<default>NULL</default></row>
+<row name="file_name" null="1" autoincrement="0">
+<datatype>VARCHAR(255)</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
@@ -73,12 +79,26 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><comment>Номер поля в порядке следования. Необходимо для вывода полей шаблона в определенном порядке</comment>
 </row>
+<row name="comment" null="1" autoincrement="0">
+<datatype>MEDIUMTEXT</datatype>
+<default>NULL</default></row>
+<row name="group_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="groups" row="id" />
+</row>
+<row name="value" null="1" autoincrement="0">
+<datatype>MEDIUMTEXT</datatype>
+<default>NULL</default></row>
+<row name="field_type" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="field_types" row="id" />
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 <comment>Поля шаблона</comment>
 </table>
-<table x="725" y="233" name="documents">
+<table x="832" y="322" name="documents">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -96,7 +116,7 @@
 <row name="the_total_cost" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="template" null="1" autoincrement="0">
+<row name="template_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="templates" row="id" />
 </row>
@@ -105,7 +125,7 @@
 </key>
 <comment>Отчет об оценке</comment>
 </table>
-<table x="1042" y="274" name="performers">
+<table x="839" y="594" name="performers">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -122,7 +142,7 @@
 </key>
 <comment>Исполнители работ</comment>
 </table>
-<table x="1058" y="558" name="employees">
+<table x="1064" y="541" name="employees">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -164,9 +184,23 @@
 <datatype>bit</datatype>
 <default>NULL</default><comment>Подписант</comment>
 </row>
+<row name="last_seen" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
 <row name="controler" null="1" autoincrement="0">
 <datatype>bit</datatype>
 <default>NULL</default></row>
+<row name="can_see_all_documents" null="1" autoincrement="0">
+<datatype>TINYINT</datatype>
+<default>NULL</default></row>
+<row name="subdivision" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="subdivisions" row="id" />
+</row>
+<row name="organization" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="organizations" row="id" />
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
@@ -242,11 +276,11 @@
 <part>id</part>
 </key>
 </table>
-<table x="766" y="22" name="document_fields">
+<table x="897" y="0" name="document_fields">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="document_id" null="0" autoincrement="0">
+<row name="document" null="0" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="documents" row="id" />
 </row>
@@ -256,9 +290,26 @@
 <row name="value" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
+<row name="index" null="1" autoincrement="0">
+<datatype>INTEGER(255)</datatype>
+<default>NULL</default></row>
 <row name="alias" null="1" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
 <default>NULL</default></row>
+<row name="template_field" null="1" autoincrement="0">
+<datatype>INTEGER(255)</datatype>
+<default>NULL</default></row>
+<row name="comment" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="group_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="groups" row="id" />
+</row>
+<row name="field_type" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="field_types" row="id" />
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
@@ -277,33 +328,106 @@
 <part>id</part>
 </key>
 </table>
-<table x="310" y="563" name="document_fields">
+<table x="1117" y="4" name="docs">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="document" null="1" autoincrement="0">
+<row name="path" null="1" autoincrement="0">
+<datatype>VARCHAR(255)</datatype>
+<default>NULL</default></row>
+<row name="document_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="documents" row="id" />
 </row>
+<row name="create_date" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
+<row name="user" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="employees" row="id" />
+</row>
+<row name="result" null="1" autoincrement="0">
+<datatype>TINYINT</datatype>
+<default>NULL</default></row>
+<row name="filename" null="1" autoincrement="0">
+<datatype>VARCHAR(255)</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="254" y="679" name="groups">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
 <row name="name" null="1" autoincrement="0">
 <datatype>VARCHAR(255)</datatype>
 <default>NULL</default></row>
-<row name="value" null="1" autoincrement="0">
+<row name="comment" null="1" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
 <default>NULL</default></row>
 <row name="index" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="alias" null="1" autoincrement="0">
-<datatype>VARCHAR(255)</datatype>
-<default>NULL</default></row>
-<row name="template_field" null="1" autoincrement="0">
+<row name="template_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="template_fields" row="id" />
+<default>NULL</default><relation table="templates" row="id" />
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
-<comment>Поля документа</comment>
+</table>
+<table x="269" y="25" name="field_types">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="1" autoincrement="0">
+<datatype>VARCHAR(255)</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="1536" y="470" name="subdivisions">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="1" autoincrement="0">
+<datatype>VARCHAR(255)</datatype>
+<default>NULL</default></row>
+<row name="inn" null="1" autoincrement="0">
+<datatype>VARCHAR(20)</datatype>
+<default>NULL</default></row>
+<row name="kpp" null="1" autoincrement="0">
+<datatype>VARCHAR(20)</datatype>
+<default>NULL</default></row>
+<row name="address" null="1" autoincrement="0">
+<datatype>VARCHAR(255)</datatype>
+<default>NULL</default></row>
+<row name="telephone" null="1" autoincrement="0">
+<datatype>VARCHAR(255)</datatype>
+<default>NULL</default></row>
+<row name="show_telephones_together" null="1" autoincrement="0">
+<datatype>TINYINT</datatype>
+<default>NULL</default></row>
+<row name="email" null="1" autoincrement="0">
+<datatype>VARCHAR(255)</datatype>
+<default>NULL</default></row>
+<row name="site" null="1" autoincrement="0">
+<datatype>VARCHAR(255)</datatype>
+<default>NULL</default></row>
+<row name="organization" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="organizations" row="id" />
+</row>
+<row name="ogrn" null="1" autoincrement="0">
+<datatype>VARCHAR(20)</datatype>
+<default>NULL</default></row>
+<row name="show_emails_together" null="1" autoincrement="0">
+<datatype>TINYINT</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
 </table>
 </sql>

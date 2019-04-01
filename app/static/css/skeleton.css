@@ -420,3 +420,71 @@ there.
 
 /* Larger than Desktop HD */
 @media (min-width: 1200px) {}
+
+
+
+
+
+/*Собственные доработки*/
+
+.alert {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.9375em;
+  font-weight: 500;
+  text-transform: none;
+  background: #fff;
+  color: #111113;
+  padding: 16px 32px 16px 16px;
+  box-shadow: none;
+  border: 1px solid rgba(17, 17, 19, 0.1);
+  border-radius: 4px;
+  position: relative;
+  margin-bottom: 16px; }
+  .alert h1,
+  .alert h2,
+  .alert h3,
+  .alert h4,
+  .alert h5,
+  .alert h6 {
+    margin-bottom: 2px; }
+  .alert a {
+    color: inherit; }
+  .alert a:hover {
+    -moz-transition: all linear 0.2s;
+    transition: all linear 0.2s;
+    color: #ee2455; }
+  .alert .close {
+    position: absolute;
+    right: 8px;
+    top: 20px; }
+  .alert p {
+    margin-top: 0;
+    margin-bottom: 0; }
+
+.alert.is-error {
+  background: rgba(238, 36, 85, 0.07);
+  border-color: rgba(238, 36, 85, 0.3);
+  color: #ee2455; }
+  .alert.is-error a:hover {
+    color: #111113; }
+
+.alert.is-success {
+  background: rgba(32, 188, 113, 0.07);
+  border-color: rgba(32, 188, 113, 0.3);
+  color: #20bc71; }
+  .alert.is-success a:hover {
+    color: #111113; }
+
+.alert.is-focus {
+  background: rgba(21, 141, 247, 0.07);
+  border-color: rgba(21, 141, 247, 0.3);
+  color: #158df7; }
+  .alert.is-focus a:hover {
+    color: #111113; }
+
+.alert.is-inverted {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff; }
+  .alert.is-inverted a:hover {
+    color: rgba(255, 255, 255, 0.6); }

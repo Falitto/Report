@@ -11,7 +11,8 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(50), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    orgnization = db.Column(db.Integer, db.ForeignKey('organizations.id'))
+    organization = db.Column(db.Integer, db.ForeignKey('organizations.id'))
+    subdivision = db.Column(db.Integer, db.ForeignKey('subdivisions.id'))
     first_name = db.Column(db.String(50))
     patronymic = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
@@ -36,6 +37,11 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
+class Field_type(db.Model):
+    __tablename__='field_types'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+
 class Appraiser(db.Model):
     __tablename__='appraisers'
     id = db.Column(db.Integer, primary_key=True)
@@ -53,6 +59,7 @@ class Performer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     document = db.Column(db.Integer, db.ForeignKey('documents.id'))
     employee = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_info = db.relationship('User', backref='user_info')
 
 class Controler(db.Model):
     __tablename__='controlers'
@@ -68,6 +75,7 @@ class Document(db.Model):
     customer = db.Column(db.String(150))
     the_total_cost = db.Column(db.Integer)
     template_id = db.Column(db.Integer, db.ForeignKey('templates.id'))
+    performers = db.relationship('Performer',  backref='performers')
 
 class Document_field(db.Model):
     __tablename__='document_fields'
@@ -78,6 +86,9 @@ class Document_field(db.Model):
     index = db.Column(db.Integer)
     alias = db.Column(db.String(255))
     template_field = db.Column(db.Integer, db.ForeignKey('template_fields.id'))
+    group_id = db.Column(db.Integer, db.ForeignKey('groups.id'))
+    comment = db.Column(db.Text)
+    field_type = db.Column(db.Integer, db.ForeignKey('field_types.id'))
 
 class Organization(db.Model):
     __tablename__='organizations'
@@ -86,6 +97,22 @@ class Organization(db.Model):
     inn = db.Column(db.String(20))
     ogrn = db.Column(db.String(20))
     kpp = db.Column(db.String(20))
+
+class Subdivision(db.Model):
+    __tablename__='subdivisions'
+    id = db.Column(db.Integer, primary_key=True)
+    organization = db.Column(db.Integer, db.ForeignKey('organizations.id'))
+    name = db.Column(db.String(255))
+    inn = db.Column(db.String(20))
+    ogrn = db.Column(db.String(20))
+    kpp = db.Column(db.String(20))
+    address = db.Column(db.String(255))
+    telephone = db.Column(db.String(255))
+    show_telephones_together = db.Column(db.Boolean)
+    email = db.Column(db.String(255))
+    show_emails_together = db.Column(db.Boolean)
+    site = db.Column(db.String(255))
+
 
 class Template(db.Model):
     __tablename__='templates'
@@ -103,8 +130,20 @@ class Template_field(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     template = db.Column(db.Integer, db.ForeignKey('templates.id'))
     name = db.Column(db.String(255))
+    value = db.Column(db.Text)
     alias = db.Column(db.String(255))
     index = db.Column(db.Integer)
+    comment = db.Column(db.Text)
+    group_id = db.Column(db.Integer, db.ForeignKey('groups.id'))
+    field_type = db.Column(db.Integer, db.ForeignKey('field_types.id'))
+
+class Group(db.Model):
+    __tablename__='groups'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+    comment = db.Column(db.Text)
+    index = db.Column(db.Integer)
+    template_id = db.Column(db.Integer, db.ForeignKey('templates.id'))
 
 class Status(db.Model):
     __tablename__='statuses'
