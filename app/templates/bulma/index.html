@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="is-half is-offset-one-quarter">
+    <p>
+        <a href="{{ url_for('templates') }}">
+            Шаблоны
+        </a>
+    </p>
+    <form action="" method="POST">
+        <div class="field">
+            <label class="label">
+                {{ form.templates.label }}
+            </label>
+            <div class="control">
+                {{ form.templates(class="u-full-width")}}
+                {% for error in form.templates.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                {{ form.submit(class="button is-link")}}
+            </div>
+        </div>
+    </form>
+    <table class="table">
+        <caption>Таблица документов</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Номер документа</th>
+                <th>Организация</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for document in documents %}
+                <tr>
+                    <td>{{ document.id }}</td>
+                    <td>{{ document.number }}</td> 
+                    <td>{{ document.organization }}</td> 
+                    <td>
+                        <a href="{{ url_for('document', document_id=document.id) }}">
+                            <img src="{{ url_for('static', filename='images/edit.svg') }}" width="16" height="16">
+                            Открыть
+                        </a>
+                    </td>
+                </tr>   
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

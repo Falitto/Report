@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="six columns">
+        <a  href="{{ url_for('template', template_id = template_id) }}">
+            <img src="{{ url_for('static', filename='images/back.svg') }}" width="16" height="16">
+            Назад
+        </a>
+    </div>
+</div>
+<br>
+{% if group %}
+<h3> {{ group.name }} </h3>
+{% endif %}
+<form action="" method="post">
+    <div class="row">
+        <div class="nine columns">
+            {{ form.hidden_tag() }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="nine columns">
+            {{ form.name.label }}
+            {{ form.name(size=255, class="u-full-width")}}
+            {% for error in form.name.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="nine columns">
+            {{ form.comment.label }}
+            {{ form.comment(class="u-full-width")}}
+            {% for error in form.comment.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="nine columns">
+            {{ form.index.label }}
+            {{ form.index(class="u-full-width")}}
+            {% for error in form.index.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+      <div class="nine columns">
+          {{ form.submit(class="button-primary") }}
+      </div>
+    </div>
+</form>
+{% endblock %}

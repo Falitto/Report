@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="nine columns">
+        <p>
+            <a href="{{ url_for('index') }}">
+                На главную
+            </a>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="nine columns">
+        <table class="no-border u-full-width">
+            <caption>Организации</caption>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Наименование</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for organization in organizations %}
+                    <tr>
+                        <td>{{ organization.id }}</td>
+                        <td>{{ organization.name }}</td> 
+                        <td>
+                            <a href="{{ url_for('organization', organization_id=organization.id) }}">
+                                <img src="{{ url_for('static', filename='images/open.svg') }}" width="16" height="16">
+                                Открыть
+                            </a>
+                        </td>
+                    </tr>   
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

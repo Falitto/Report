@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="nine columns">
+        <p>
+            <a href="{{ url_for('document', document_id=document_id) }}">
+                Назад
+            </a>
+        </p>
+    </div>
+</div>
+<form action="" method="POST">
+    <div class="row">
+        <div class="four columns">
+            {{ form.performers.label }}
+        </div>
+    </div>
+    <div class="row">
+            <div class="four columns">
+            {{ form.performers(class="u-full-width")}}
+            {% for error in form.performers.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div class="four columns">
+            {{ form.submit(class="u-full-width")}}
+        </div>
+    </div>
+</form>
+<div class="row">
+    <div class="nine columns">
+        <table class="no-border u-full-width">
+            <caption>Исполнители</caption>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Пользователь</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for performer in performers %}
+                    <tr>
+                        <td>{{ performer.id }}</td>
+                        <td>{{ performer.user_info.last_name }}&nbsp;{{ performer.user_info.first_name }}&nbsp;{{ performer.user_info.patronymic }}</td> 
+                        <td>
+                            <a href="{{ url_for('delete_performer', document_id=document_id, performer_id=performer.id) }}">
+                                <img src="{{ url_for('static', filename='images/delete.svg') }}" width="16" height="16">
+                                Удалить
+                            </a>
+                        </td>
+                    </tr>   
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

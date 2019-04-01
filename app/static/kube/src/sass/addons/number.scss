@@ -1,0 +1,137 @@
+// NUMBER
+// ---------------------------------------------------------------------------
+@import '../vars';
+@import '../mixins';
+
+.input-number {
+    position: relative;
+    display: flex;
+
+    & input[type=number]::-webkit-inner-spin-button,
+    & input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    & input[type=number] {
+        -moz-appearance: textfield;
+        width: auto;
+        text-align: center;
+    }
+
+    & input {
+        border-radius: 0;
+        border-left: 1px solid transparent;
+        border-right: 1px solid transparent;
+    }
+
+    & .is-up,
+    & .is-down {
+        width: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    	vertical-align: middle;
+        cursor: pointer;
+        color: $color-text;
+        font-size: $font-size-small;
+        text-decoration: none;
+        text-align: center;
+        -webkit-user-select: none;
+        user-select: none;
+        border: $input-default-border-width $input-default-border-style $input-default-border-color;
+
+
+        &:hover {
+            background-color: rgba($color-black, .04);
+        }
+    }
+    & .is-up {
+        border-left-color: transparent;
+        border-top-right-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+        margin-left: -1px;
+        &:hover {
+            border-radius: $border-radius;
+        }
+    }
+    & .is-down {
+        border-right-color: transparent;
+        border-top-left-radius: $border-radius;
+        border-bottom-left-radius: $border-radius;
+        margin-right: -1px;
+        &:hover {
+            border-radius: $border-radius;
+        }
+    }
+
+    & .input-number-input {
+        & input {
+            border-left: $input-default-border-width $input-default-border-style $input-default-border-color;
+            border-right: 1px solid transparent;
+        }
+    }
+    & input,
+    & .input-number-input input {
+        &:hover {
+        	border: $input-hover-border-width $input-hover-border-style $input-hover-border-color;
+        }
+        &:hover {
+        	border: $input-hover-border-width $input-hover-border-style $input-hover-border-color;
+        }
+        &:focus {
+        	border: $input-focus-border-width $input-focus-border-style $input-focus-border-color;
+        }
+        &.is-error {
+        	border: $input-error-border-width $input-error-border-style $input-error-border-color;
+        	&:focus {
+                border-color: $input-error-focus-border-color;
+        	}
+    	}
+        &.is-success  {
+        	border: $input-success-border-width $input-success-border-style $input-success-border-color;
+        	&:focus {
+                border-color: $input-success-focus-border-color;
+        	}
+        }
+        &.is-warning  {
+        	border: $input-warning-border-width $input-warning-border-style $input-warning-border-color;
+        	&:focus {
+                border-color: $input-warning-focus-border-color;
+        	}
+        }
+    }
+    & .input-number-nav {
+        position: relative;
+        width: 24px;
+        margin-left: -1px;
+
+        & .is-up,
+        & .is-down {
+            margin: 0;
+            position: absolute;
+            cursor: pointer;
+            width: 24px;
+            height: 50%;
+            line-height: 20px;
+            border: none;
+        }
+        & .is-up {
+            border-top-left-radius: 0;
+            border-bottom-right-radius: 0;
+            top: 0;
+            right: 0;
+            border-top: $input-default-border-width $input-default-border-style $input-default-border-color;
+            border-right: $input-default-border-width $input-default-border-style $input-default-border-color;
+        }
+        & .is-down {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: $border-radius;
+            border-right: $input-default-border-width $input-default-border-style $input-default-border-color;
+            border-bottom: $input-default-border-width $input-default-border-style $input-default-border-color;
+            right: 0;
+            bottom: 0;
+        }
+    }
+
+}
